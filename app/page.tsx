@@ -1,12 +1,10 @@
 'use client';
 import { useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+import { OrbitControls, useOBJ } from '@react-three/drei';
 
-function ModelViewer({ objData }: { objData: string }) {
-  const loader = new OBJLoader();
-  const obj = loader.parse(objData);
+function ModelViewer({ url }: { url: string }) {
+  const obj = useOBJ(url);
   return <primitive object={obj} scale={1.5} />;
 }
 
