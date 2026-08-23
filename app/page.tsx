@@ -2,9 +2,8 @@
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
 
-// Disable SSR for Three.js so Vercel builds without canvas errors
-const Canvas = dynamic(() => import('@react-three/fiber').then((mod) => mod.Canvas), { ssr: false });
-const OrbitControls = dynamic(() => import('@react-three/drei').then((mod) => mod.OrbitControls), { ssr: false });
+// Disable SSR for Three.js component so Vercel build server does not execute canvas code
+const ThreeViewer = dynamic(() => import('./ThreeViewer'), { ssr: false });
 
 export default function Home() {
   const [front, setFront] = useState<File | null>(null);
@@ -85,15 +84,7 @@ export default function Home() {
       {data && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="h-80 bg-slate-800 rounded-xl overflow-hidden flex items-center justify-center">
-            <Canvas>
-              <ambientLight intensity={0.8} />
-              <directionalLight position={[10, 10, 5]} />
-              <mesh>
-                <boxGeometry args={[1, 2, 1]} />
-                <meshStandardMaterial color="royalblue" />
-              </mesh>
-              <OrbitControls />
-            </Canvas>
+            <ThreeViewer />
           </div>
 
           <div className="bg-slate-800 p-6 rounded-xl">
@@ -118,3 +109,4 @@ export default function Home() {
     </main>
   );
 }
+
