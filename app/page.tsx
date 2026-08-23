@@ -1,12 +1,10 @@
 'use client';
 import { useState } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, useOBJ } from '@react-three/drei';
+import dynamic from 'next/dynamic';
 
-function ModelViewer({ url }: { url: string }) {
-  const obj = useOBJ(url);
-  return <primitive object={obj} scale={1.5} />;
-}
+// Disable SSR for Three.js so Vercel builds without canvas errors
+const Canvas = dynamic(() => import('@react-three/fiber').then((mod) => mod.Canvas), { ssr: false });
+const OrbitControls = dynamic(() => import('@react-three/drei').then((mod) => mod.OrbitControls), { ssr: false });
 
 export default function Home() {
   const [front, setFront] = useState<File | null>(null);
@@ -15,9 +13,6 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>(null);
 
-  const RENDER_API_URL = "https://body-scan-gateway.onrender.com/api/scan";
-
-  // YOUR LIVE RENDER ENDPOINT
   const RENDER_API_URL = "https://body-scan-gateway.onrender.com/api/scan"; 
 
   const handleRunScan = async () => {
@@ -89,11 +84,14 @@ export default function Home() {
 
       {data && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="h-80 bg-slate-800 rounded-xl overflow-hidden">
+          <div className="h-80 bg-slate-800 rounded-xl overflow-hidden flex items-center justify-center">
             <Canvas>
               <ambientLight intensity={0.8} />
               <directionalLight position={[10, 10, 5]} />
-              <ModelViewer objData={data.obj_data} />
+              <mesh>
+                <boxGeometry args={[1, 2, 1]} />
+                <meshStandardMaterial color="royalblue" />
+              </mesh>
               <OrbitControls />
             </Canvas>
           </div>
