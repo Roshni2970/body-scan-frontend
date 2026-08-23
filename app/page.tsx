@@ -15,6 +15,8 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>(null);
 
+  const RENDER_API_URL = "https://body-scan-gateway.onrender.com/api/scan";
+
   // YOUR LIVE RENDER ENDPOINT
   const RENDER_API_URL = "https://body-scan-gateway.onrender.com/api/scan"; 
 
