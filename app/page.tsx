@@ -17,7 +17,8 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>(null);
 
-  const RENDER_API_URL = "https://YOUR_RENDER_URL.onrender.com/api/scan"; 
+  // YOUR LIVE RENDER ENDPOINT
+  const RENDER_API_URL = "https://body-scan-gateway.onrender.com/api/scan"; 
 
   const handleRunScan = async () => {
     if (!front || !side) return alert("Please upload both front and side photos.");
